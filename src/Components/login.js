@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link, Redirect } from 'react-router-dom'; 
+import { Link } from 'react-router-dom'; 
 import axios from 'axios';
 
 class Login extends Component{
@@ -32,8 +32,12 @@ class Login extends Component{
       await axios.post('https://book-a-doc.herokuapp.com/api/v1/auth/login/', data
       )
       .then(response => {
-        let userData = response;
-        sessionStorage.setItem('userData', userData);
+        let userData = response.data;
+        console.log(userData);
+        sessionStorage.setItem('userData', JSON.stringify(userData));
+        let data = sessionStorage.getItem('userData');
+        console.log(JSON.parse(data));
+       
         alert('login successul');
         window.location = '/dashboard';
       })
