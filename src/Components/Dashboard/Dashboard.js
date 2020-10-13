@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import DoctorList from './DoctorList';
 import Profile from './profile';
 import avatar from './avatar.svg';
+import { Redirect } from 'react-router';
 
 const Doctors = [
   {
@@ -34,7 +35,6 @@ class Dashboard extends Component{
     this.state={
       date:''
     }
-
     this.grabDate = this.grabDate.bind(this);
     
   }
@@ -46,18 +46,26 @@ class Dashboard extends Component{
     })
   } 
 
+  // componentDidMount() {
+  //   fetch('https://book-a-doc.herokuapp.com/api/v1/doctor/list') 
+  // }
+
   render() {
-    return(
-      <>
-        <div className="dashboard-cont">
-          <Profile />
-          <h2>Find A Doctor</h2>
-          <div className="doctors-cont">
-            <DoctorList state={this.state} Doctors={Doctors} grabDate={this.grabDate}/> 
+    if (!sessionStorage.length) {
+      return <Redirect to='/'/>
+    } else {
+      return( 
+        <>
+          <div className="dashboard-cont">
+            <Profile />
+            <h2>Find A Doctor</h2>
+            <div className="doctors-cont">
+              <DoctorList state={this.state} Doctors={Doctors} grabDate={this.grabDate}/> 
+            </div>
           </div>
-        </div>
-      </>
-    )
+        </>
+      )
+    }
   }
 }
 

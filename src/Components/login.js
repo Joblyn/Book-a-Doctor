@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-// import { Container, Form, Button } from 'react-bootstrap';
-import { Link } from 'react-router-dom'; 
+import { Link, Redirect } from 'react-router-dom'; 
+import axios from 'axios';
 
 class Login extends Component{
   constructor(props){
@@ -21,10 +21,53 @@ class Login extends Component{
     })
   }
 
-  login() {
+  async login(e) {
+    e.preventDefault();
     const { email, password } = this.state;
-    email && password ? alert('login successful') : alert('Please fill in the fields');
+    if (email && password) {
+      let data = {
+        email: email,
+        password: password
+      }
+      await axios.post('https://book-a-doc.herokuapp.com/api/v1/auth/login/', data
+      )
+      .then(response => {
+        let userData = response;
+        sessionStorage.setItem('userData', userData);
+        alert('login successul');
+        window.location = '/dashboard';
+      })
+      .catch(error => {
+        console.log(error);
+        alert(`Server error, try again later`)
+      })
+    } 
   }
+
+
+// const PostData = (userData) => {
+//   let BaseUrl = 'https://book-a-doc.herokuapp.com/api/v1/auth/register/'; 
+//   console.log(BaseUrl+type);
+//   return new Promise((resolve, reject) => {
+//     fetch(BaseUrl, {
+//       method: 'POST', 
+//       headers: {
+//         'Accept': 'application/json',
+//         'Content-type': 'application/json'
+//       }, 
+//       body: JSON.stringify(userData)
+//     }) 
+//     .then((response) => response.json())
+//     .then((responseJson) => {
+//       resolve(responseJson);
+//     }) 
+//     .catch((error) => {
+//       reject(error) 
+//     })
+//   })
+
+// }
+
 
   render () {
     return( 
