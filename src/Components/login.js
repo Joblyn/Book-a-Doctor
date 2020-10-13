@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom'; 
+import { Link, Redirect } from 'react-router-dom'; 
 import axios from 'axios';
 
 class Login extends Component{
@@ -39,6 +39,7 @@ class Login extends Component{
         console.log(JSON.parse(data));
        
         alert('login successul');
+        // return <Redirect to={{pathname: '/dashboard'}}/>
         window.location = '/dashboard';
       })
       .catch(error => {
@@ -48,29 +49,6 @@ class Login extends Component{
     } 
   }
 
-
-// const PostData = (userData) => {
-//   let BaseUrl = 'https://book-a-doc.herokuapp.com/api/v1/auth/register/'; 
-//   console.log(BaseUrl+type);
-//   return new Promise((resolve, reject) => {
-//     fetch(BaseUrl, {
-//       method: 'POST', 
-//       headers: {
-//         'Accept': 'application/json',
-//         'Content-type': 'application/json'
-//       }, 
-//       body: JSON.stringify(userData)
-//     }) 
-//     .then((response) => response.json())
-//     .then((responseJson) => {
-//       resolve(responseJson);
-//     }) 
-//     .catch((error) => {
-//       reject(error) 
-//     })
-//   })
-
-// }
 
 
   render () {
